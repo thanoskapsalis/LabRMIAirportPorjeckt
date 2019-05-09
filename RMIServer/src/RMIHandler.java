@@ -36,6 +36,13 @@ public class RMIHandler extends UnicastRemoteObject implements Booking {
     public boolean Confirn() throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public void TestPrint(){
+        for (int i = 0; i < Server_Connector.client.size(); i++) {
+            System.out.println(Server_Connector.client.get(i).toString());
+            
+        }
+    }
 
 
     

@@ -26,4 +26,10 @@ public class DataStorage {
         this.passengers=passengers;
         this.token=token;
     }
+    
+    
+    public String toString()
+    {
+        return departure+" "+destination+" "+token;
+    }
 }
