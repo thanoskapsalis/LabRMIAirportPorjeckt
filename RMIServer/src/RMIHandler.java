@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import javax.swing.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -39,14 +40,32 @@ public class RMIHandler extends UnicastRemoteObject implements Booking {
     public String Confirm() throws RemoteException {
         return flag;
     }
-    ArrayList<String> test_array= new ArrayList<>();
+
+    ArrayList<String> test_array = new ArrayList<>();
 
 
     public ArrayList<String> FlightPreview() {
-        for(int i=0; i<DBHandler.full.size(); i++){
+        for (int i = 0; i < DBHandler.full.size(); i++) {
             test_array.add(DBHandler.full.get(i).toString());
+
         }
+
         return test_array;
+
+    }
+
+    public void cleanup() {
+        DBHandler.full.clear();
+        DBHandler.retrieved.clear();
+        test_array.clear();
+    }
+
+    public void BookFlight(String FlightID, int passengers) {
+        DBHandler db_link = new DBHandler(FlightID, passengers);
+        flag=db_link.rmi();
+
+
+
 
     }
 
