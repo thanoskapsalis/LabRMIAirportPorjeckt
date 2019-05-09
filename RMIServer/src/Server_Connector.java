@@ -8,7 +8,6 @@ import java.rmi.Naming;
 import java.rmi.registry.Registry;
 
 /**
- *
  * @author nick
  */
 public class Server_Connector {
@@ -19,16 +18,16 @@ public class Server_Connector {
     public static void main(String[] args) {
         RMIHandler handler;
         try {
-            handler = new RMIHandler ();
+            handler = new RMIHandler();
             System.out.println("ServerBooted");
             Registry r = java.rmi.registry.LocateRegistry.createRegistry(1099);
-            Naming.rebind("//localhost/RMIServer",handler);
-            System.out.println("ServerBooted22");
-        }
-        catch (Exception e ){
+            Naming.rebind("//localhost/RMIServer", handler);
+
+
+        } catch (Exception e) {
             System.out.println(e);
 
         }
     }
-    
+
 }

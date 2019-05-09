@@ -16,6 +16,7 @@ public class RMIHandler extends UnicastRemoteObject implements Booking {
     protected RMIHandler() throws RemoteException
     {
         super();
+        System.out.println("New Booking Request");
     }
 
     @Override
@@ -26,6 +27,7 @@ public class RMIHandler extends UnicastRemoteObject implements Booking {
        Data_toBook toreturn= new Data_toBook(destination,arrival_date,departure,passengers);
        System.out.println("//////Successfully Saved return flight/////");
        System.out.println(toreturn.toString());
+       DBHandler db_link = new DBHandler(togo,toreturn);
 
     }
 
@@ -33,6 +35,8 @@ public class RMIHandler extends UnicastRemoteObject implements Booking {
     public boolean Confirn() throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+
     
     
     
