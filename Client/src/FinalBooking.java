@@ -3,14 +3,18 @@ import java.awt.Toolkit;
 import java.awt.event.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 
 public class FinalBooking extends JFrame {
     ArrayList<String> Result = new ArrayList();
     Booking look_op;
-    public FinalBooking(Booking look_op) throws RemoteException {
+    int passengers;
+    public FinalBooking(Booking look_op,int passengers) throws RemoteException {
         this.look_op=look_op;
+        this.passengers=passengers;
 
         
         Result=look_op.FlightPreview();
@@ -74,6 +78,11 @@ public class FinalBooking extends JFrame {
             System.out.println(Result.get(i));
             
             FlightArea.append(Result.get(i)+"\n");
+        }
+        try {
+            look_op.cleanup();
+        } catch (RemoteException ex) {
+            
         }
         jScrollPane1.setViewportView(FlightArea);
 
@@ -177,6 +186,16 @@ public class FinalBooking extends JFrame {
 
     private void ContinueActionPerformed(ActionEvent evt) {                                         
         
+        try {
+            look_op.BookFlight(FCode.getText(),passengers);
+            String reserve = look_op.Confirm();
+            System.out.println(reserve);
+            if(reserve.equals("FINE"))
+            {
+                JOptionPane.showMessageDialog(this, "Your reservation has been completed!");
+            }
+        } catch (RemoteException ex) {
+        }
         
         close();
     }                                        

@@ -187,18 +187,27 @@ public class Main extends JFrame {
         try {
             Booking look_op = (Booking) Naming.lookup("//192.168.1.7/RMIServer");
 
-            Random rand = new Random();//dimiourgia random arithmwn 100-10000 gia ton monadiko kwdiko
+            Random rand = new Random();
             look_op.BookChecker(From.getText(), To.getText(), FlightDate.getText(), ReturnDate.getText(), Integer.parseInt(Travellers.getText()),rand.nextInt(10000));
 
             String flag = look_op.Confirm();
             System.out.println(flag);
             if(flag.equals("OK"))
             {
-                new FinalBooking(look_op).setVisible(true);//epistrofi stin arxiki othoni
+                new FinalBooking(look_op,Integer.parseInt(Travellers.getText())).setVisible(true);
+                JOptionPane.showMessageDialog(this, flag);
+                close();
 
             }
-            JOptionPane.showMessageDialog(this, flag);
-            close();
+            if(flag.equals("NOseat"))
+            {
+                JOptionPane.showMessageDialog(this, "There is no seat available for this flight.\nPlease search for enotherone!");
+            }
+            if(flag.equals("NOflight"))
+            {
+                JOptionPane.showMessageDialog(this, "There is not an available flight.\nPlease search for enotherone!");
+            }
+            
             //System.out.println(look_op.update());
         } catch (NotBoundException ex) {
             ex.printStackTrace();
