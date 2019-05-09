@@ -1,6 +1,3 @@
-/*Nikos Potaris
-icsd15173*/
-
 import java.io.Serializable;
 
 /**
@@ -15,26 +12,35 @@ public class Data_toBook implements Serializable {
     String destination;
     String flightID;
     int seat;
-    int ticketprice;
     boolean answer;
     String flag;
+    String hours;
     int token;
+    int price;
 
     public Data_toBook(String departure, String date, String destianation, int seat,int token) {
         this.date = date;
         this.departure = departure;
         this.destination = destianation;
         this.seat = seat;
-        this.token = token;
+        this.token=token;
+    }
+    
+    public Data_toBook(String departure, String date, String destianation,int price,String flightID) {
+        this.date = date;
+        this.departure = departure;
+        this.destination = destianation;
+        this.price=price;
+        this.flightID=flightID;
     }
 
     public Data_toBook(String flag) {
         this.flag = flag;
     }
-    
-    public Data_toBook(String flag,int token) {
-        this.flag = flag;
-        this.token = token;
+
+    public Data_toBook(String flag, int token){
+        this.flag=flag;
+        this.token=token;
     }
 
     public boolean getAnswer() {
@@ -42,7 +48,7 @@ public class Data_toBook implements Serializable {
     }
 
     public String toString() {
-        return departure + " " + date + " " + destination + " " + seat + " " + token;
+        return departure + " " + date + " " + destination + " " + price + " " + flightID;
     }
 
     public String getFlag() {
@@ -68,9 +74,12 @@ public class Data_toBook implements Serializable {
     public String getDestination() {
         return destination;
     }
-    
+
     public int getToken() {
         return token;
     }
 
+    public String getFlightID(){return  flightID;}
+
+    public int getTicketprice(){return price;}
 }

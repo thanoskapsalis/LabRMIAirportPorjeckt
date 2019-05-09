@@ -5,10 +5,13 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Main {
 
     public static String[] dataIn;
+    public static String[] data;
+    public static ArrayList<Data_toBook> Odj = new ArrayList();
 
     public static void main(String[] args) {
 
@@ -50,6 +53,7 @@ public class Main {
                                 for (int j = 0; j < flight.List.size(); j++) {
 
                                     dataIn = flight.List.get(j).split(":");
+                                    
 
                                     if (dataIn[0].equals(message2.getDeparture()) && dataIn[1].equals(message2.getDestination()) && dataIn[2].equals(message2.getDate())) {
                                         System.out.println(message2.getDeparture());
@@ -61,6 +65,22 @@ public class Main {
                                             Data_toBook ok = new Data_toBook("OK",message2.getToken());
                                             outstream.writeObject(ok);
                                             outstream.flush();
+                                            
+                                            Data_toBook start = new Data_toBook("START",flight.List.size());
+                                            outstream.writeObject(start);
+                                            outstream.flush();
+                                            System.out.println(flight.List.size());
+                                            for(int k=0; k<flight.List.size(); k++)
+                                            {
+                                                data= flight.List.get(k).split(":");
+                                                //System.out.println(flight.List.get(k).toString());
+                                                Odj.add(new Data_toBook(data[0],data[2],data[1],Integer.parseInt(data[5]),data[6]));
+                                               
+                                                System.out.println(Odj.get(k).toString());
+                                                outstream.writeObject(Odj.get(k));
+                                                outstream.flush();
+                                            }
+                                            
                                             //remainSeats = remainSeats - message2.getSeat();
                                             //dataIn[3] = String.valueOf(remainSeats);
                                             //flight.List.set(j,dataIn[0]+":"+dataIn[1]+":"+dataIn[2]+":"+dataIn[3]);
@@ -74,8 +94,11 @@ public class Main {
                                             outstream.writeObject(Notok);
                                             outstream.flush();
                                         }
-                                    } else {
+                                    } else if (dataIn[0].equals(message2.getDeparture()) || dataIn[1].equals(message2.getDestination()) || dataIn[2].equals(message2.getDate())){
                                         System.out.println("No flight found!!");
+                                        Data_toBook Noflight = new Data_toBook("NOflight",message2.getToken());
+                                        outstream.writeObject(Noflight);
+                                        outstream.flush();
                                     }
 
                                 }

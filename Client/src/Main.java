@@ -1,4 +1,5 @@
 
+import java.awt.Toolkit;
 import javax.swing.*;
 import java.awt.event.*;
 import java.net.MalformedURLException;
@@ -30,7 +31,7 @@ public class Main extends JFrame {
         Travellers = new JTextField();
         Submit = new JButton();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel1.setText("Welcome to BookTicket!");
@@ -154,6 +155,12 @@ public class Main extends JFrame {
 
         pack();
     }
+    
+    public void close() {
+        WindowEvent winClosingEvent = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
+        //outstream.write();
+    }
 
     private void FromActionPerformed(ActionEvent evt) {
         // TODO add your handling code here:
@@ -183,6 +190,15 @@ public class Main extends JFrame {
             Random rand = new Random();//dimiourgia random arithmwn 100-10000 gia ton monadiko kwdiko
             look_op.BookChecker(From.getText(), To.getText(), FlightDate.getText(), ReturnDate.getText(), Integer.parseInt(Travellers.getText()),rand.nextInt(10000));
 
+            String flag = look_op.Confirm();
+            System.out.println(flag);
+            if(flag.equals("OK"))
+            {
+                new FinalBooking(look_op).setVisible(true);//epistrofi stin arxiki othoni
+
+            }
+            JOptionPane.showMessageDialog(this, flag);
+            close();
             //System.out.println(look_op.update());
         } catch (NotBoundException ex) {
             ex.printStackTrace();
