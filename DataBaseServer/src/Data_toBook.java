@@ -18,16 +18,23 @@ public class Data_toBook implements Serializable {
     int ticketprice;
     boolean answer;
     String flag;
+    int token;
 
-    public Data_toBook(String departure, String date, String destianation, int seat) {
+    public Data_toBook(String departure, String date, String destianation, int seat,int token) {
         this.date = date;
         this.departure = departure;
         this.destination = destianation;
         this.seat = seat;
+        this.token = token;
     }
 
     public Data_toBook(String flag) {
         this.flag = flag;
+    }
+    
+    public Data_toBook(String flag,int token) {
+        this.flag = flag;
+        this.token = token;
     }
 
     public boolean getAnswer() {
@@ -35,7 +42,7 @@ public class Data_toBook implements Serializable {
     }
 
     public String toString() {
-        return departure + " " + date + " " + destination + " " + seat;
+        return departure + " " + date + " " + destination + " " + seat + " " + token;
     }
 
     public String getFlag() {
@@ -60,6 +67,10 @@ public class Data_toBook implements Serializable {
 
     public String getDestination() {
         return destination;
+    }
+    
+    public int getToken() {
+        return token;
     }
 
 }
