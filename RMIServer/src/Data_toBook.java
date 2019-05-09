@@ -22,6 +22,7 @@ public class Data_toBook implements Serializable{
     String flag;
     
     
+    
     public Data_toBook(String departure,String date,String destination,int seat)
     {
         this.date=date;
