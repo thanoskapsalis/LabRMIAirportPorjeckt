@@ -17,7 +17,7 @@ public class DataStorage {
     int token;
     
     
-    public DataStorage(String departure,String destiantion,String depart_date,String arrival_date,int passengers,int token)
+    public DataStorage(String departure,String destination,String depart_date,String arrival_date,int passengers,int token)
     {
         this.departure=departure;
         this.destination=destination;
