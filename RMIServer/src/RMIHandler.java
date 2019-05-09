@@ -6,49 +6,48 @@
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 /**
- *
  * @author nick
  */
 public class RMIHandler extends UnicastRemoteObject implements Booking {
-    
-    protected RMIHandler() throws RemoteException
-    {
+
+    String flag;
+
+    protected RMIHandler() throws RemoteException {
         super();
         System.out.println("New Booking Request");
     }
 
     @Override
-    public void BookChecker(String departure, String destination, String depart_date, String arrival_date, int passengers,int token) throws RemoteException {
-       DataStorage temp =new DataStorage(departure,destination,depart_date,arrival_date,passengers,token);
+    public void BookChecker(String departure, String destination, String depart_date, String arrival_date, int passengers, int token) throws RemoteException {
+        DataStorage temp = new DataStorage(departure, destination, depart_date, arrival_date, passengers, token);
         Server_Connector.client.add(temp);
-       TestPrint();
-        Data_toBook togo= new Data_toBook(departure,depart_date,destination,passengers,temp.getToken());
-       System.out.println("//////Successfully Saved/////");
-       System.out.println(togo.toString());
-       Data_toBook toreturn= new Data_toBook(destination,arrival_date,departure,passengers,temp.getToken());
-       System.out.println("//////Successfully Saved return flight/////");
-       System.out.println(toreturn.toString());
-       DBHandler db_link = new DBHandler(togo,toreturn);
+        Data_toBook togo = new Data_toBook(departure, depart_date, destination, passengers, temp.getToken());
+        System.out.println("//////Successfully Saved/////");
+        System.out.println(togo.toString());
+        Data_toBook toreturn = new Data_toBook(destination, arrival_date, departure, passengers, temp.getToken());
+        System.out.println("//////Successfully Saved return flight/////");
+        System.out.println(toreturn.toString());
+        DBHandler db_link = new DBHandler(togo, toreturn);
+        flag = db_link.rmi();
 
     }
 
     @Override
-    public boolean Confirn() throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String Confirm() throws RemoteException {
+        return flag;
     }
-    
-    public void TestPrint(){
-        for (int i = 0; i < Server_Connector.client.size(); i++) {
-            System.out.println(Server_Connector.client.get(i).toString());
-            
+    ArrayList<String> test_array= new ArrayList<>();
+
+
+    public ArrayList<String> FlightPreview() {
+        for(int i=0; i<DBHandler.full.size(); i++){
+            test_array.add(DBHandler.full.get(i).toString());
         }
+        return test_array;
+
     }
 
-
-    
-    
-    
-    
 }

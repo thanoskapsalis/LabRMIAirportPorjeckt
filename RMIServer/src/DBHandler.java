@@ -4,10 +4,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class DBHandler {
     Data_toBook togo;
     Data_toBook toreturn;
+    String RMIflag;
+    public static ArrayList<DataStorage> full = new ArrayList<>();
+
 
     public DBHandler(Data_toBook togo, Data_toBook toreturn) {
         this.togo = togo;
@@ -36,7 +40,7 @@ public class DBHandler {
                 os.flush();
                 System.out.println("Flight Successfully Sent to DBHandler");
             }
-            Response(os,is);
+            Response(os, is);
 
 
         } catch (Exception e) {
@@ -45,20 +49,54 @@ public class DBHandler {
 
     }
 
-    public void Response(ObjectOutputStream os,ObjectInputStream is) throws IOException, ClassNotFoundException {
+    public void Response(ObjectOutputStream os, ObjectInputStream is) throws IOException, ClassNotFoundException {
+        System.out.println("Waiting for response from the DB Server");
         Data_toBook response = (Data_toBook) is.readObject();
-        if(response.getFlag().equals("OK"))
-        {
-            System.out.println("nainainainai");
-            System.out.println(response.getToken());
-        }
-        if(response.getFlag().equals("NOseat"))
-        {
-            System.out.println("poutso");
-        }
+
+            if (response.getFlag().equals("OK")) {
+                RMIflag = response.getFlag();
+                RetrieveFlights(os, is);
+            }
+
+            if (response.getFlag().equals("NOseat"))
+                RMIflag = response.getFlag();
+            if (response.getFlag().equals("NOflight"))
+                RMIflag = response.getFlag();
+
+
 
     }
 
+    public String rmi() {
+        return RMIflag;
+    }
 
+    private void RetrieveFlights(ObjectOutputStream os, ObjectInputStream is) throws IOException, ClassNotFoundException {
+        Data_toBook data = (Data_toBook) is.readObject();
+        System.out.println("Retrieving Flights Number: "+data.getToken());
+        ArrayList<Data_toBook> retrieved = new ArrayList();
+        for (int i = 0; i < data.getToken(); i++){
+            retrieved.add((Data_toBook) is.readObject());
+            //System.out.println(retrieved.get(i).toString());
+        }
 
+        GroupFlights(retrieved);
+    }
+
+    private void GroupFlights(ArrayList<Data_toBook> retrieved){
+        System.out.println("GROUPING");
+        for(int i=0; i<retrieved.size(); i++){
+
+            if(i%2==0){
+                System.out.println("reeeeee " + i%2);
+               // System.out.println(i);
+                full.add(new DataStorage(retrieved.get(i).getDeparture(),retrieved.get(i+1).getDeparture(),
+                        retrieved.get(i).getDate(),retrieved.get(i+1).getDate(),
+                        retrieved.get(i).getFlightID(),retrieved.get(i).getTicketprice()));
+            }
+           for(int j=0; j<full.size(); j++){
+               System.out.println(full.get(j).toString());
+           }
+        }
+    }
 }
