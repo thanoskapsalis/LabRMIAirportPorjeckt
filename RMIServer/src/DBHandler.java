@@ -1,5 +1,6 @@
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -35,6 +36,7 @@ public class DBHandler {
                 os.flush();
                 System.out.println("Flight Successfully Sent to DBHandler");
             }
+            Response(os,is);
 
 
         } catch (Exception e) {
@@ -42,5 +44,21 @@ public class DBHandler {
         }
 
     }
+
+    public void Response(ObjectOutputStream os,ObjectInputStream is) throws IOException, ClassNotFoundException {
+        Data_toBook response = (Data_toBook) is.readObject();
+        if(response.getFlag().equals("OK"))
+        {
+            System.out.println("nainainainai");
+            System.out.println(response.getToken());
+        }
+        if(response.getFlag().equals("NOseat"))
+        {
+            System.out.println("poutso");
+        }
+
+    }
+
+
 
 }

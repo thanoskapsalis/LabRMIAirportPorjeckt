@@ -32,4 +32,8 @@ public class DataStorage {
     {
         return departure+" "+destination+" "+token;
     }
+
+    public int getToken() {
+        return token;
+    }
 }
