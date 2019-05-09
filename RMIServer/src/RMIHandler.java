@@ -20,8 +20,9 @@ public class RMIHandler extends UnicastRemoteObject implements Booking {
     }
 
     @Override
-    public void BookChecker(String departure, String destination, String depart_date, String arrival_date, int passengers) throws RemoteException {
-       Data_toBook togo= new Data_toBook(departure,depart_date,destination,passengers);
+    public void BookChecker(String departure, String destination, String depart_date, String arrival_date, int passengers,int token) throws RemoteException {
+       Server_Connector.client.add(new DataStorage(departure,destination,depart_date,arrival_date,passengers,token));
+        Data_toBook togo= new Data_toBook(departure,depart_date,destination,passengers);
        System.out.println("//////Successfully Saved/////");
        System.out.println(togo.toString());
        Data_toBook toreturn= new Data_toBook(destination,arrival_date,departure,passengers);

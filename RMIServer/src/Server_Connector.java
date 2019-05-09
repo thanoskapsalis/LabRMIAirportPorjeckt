@@ -6,15 +6,14 @@
 
 import java.rmi.Naming;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 /**
  * @author nick
  */
 public class Server_Connector {
 
-    /**
-     * @param args the command line arguments
-     */
+    public static ArrayList<DataStorage> client = new ArrayList();
     public static void main(String[] args) {
         RMIHandler handler;
         try {
