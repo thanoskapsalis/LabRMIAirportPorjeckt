@@ -46,4 +46,20 @@ public class Data_toBook implements Serializable {
         this.flag = flag;
     }
 
+    public int getSeat() {
+        return seat;
+    }
+
+    public String getDeparture() {
+        return departure;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
 }
