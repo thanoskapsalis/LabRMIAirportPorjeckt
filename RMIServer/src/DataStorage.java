@@ -17,6 +17,7 @@ public class DataStorage {
     int token;
     int price;
     String flightID;
+    String time;
     
     
     public DataStorage(String departure,String destination,String depart_date,String arrival_date,int passengers,int token)
@@ -29,7 +30,7 @@ public class DataStorage {
         this.token=token;
     }
 
-    public DataStorage(String departure,String destination,String depart_date,String arrival_date,String flightID,int price)
+    public DataStorage(String departure,String destination,String depart_date,String arrival_date,String flightID,int price,String time)
     {
         this.departure=departure;
         this.destination=destination;
@@ -37,12 +38,13 @@ public class DataStorage {
         this.arrival_date=arrival_date;
         this.flightID=flightID;
         this.price=price;
+        this.time=time;
     }
     
     
     public String toString()
     {
-        return flightID+"\t"+departure+"\t"+destination+"\t"+depart_date+"\t"+arrival_date+"\t"+price;
+        return flightID+"\t"+departure+"\t"+destination+"\t"+depart_date+"\t"+arrival_date+"\t"+price+"\t"+time;
     }
 
     public int getToken() {

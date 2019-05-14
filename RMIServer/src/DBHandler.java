@@ -105,8 +105,9 @@ public class DBHandler {
         Data_toBook data = (Data_toBook) is.readObject();
         System.out.println("Retrieving Flights Number: " + data.getToken());
         for (int i = 0; i < data.getToken(); i++) {
+            //System.out.println("Recieved");
             retrieved.add((Data_toBook) is.readObject());
-            //System.out.println(retrieved.get(i).toString());
+            System.out.println(retrieved.get(i).toString());
         }
 
 
@@ -120,7 +121,7 @@ public class DBHandler {
                 // System.out.println(i);
                 full.add(new DataStorage(retrieved.get(i).getDeparture(), retrieved.get(i + 1).getDeparture(),
                         retrieved.get(i).getDate(), retrieved.get(i + 1).getDate(),
-                        retrieved.get(i).getFlightID(), retrieved.get(i).getTicketprice()));
+                        retrieved.get(i).getFlightID(), retrieved.get(i).getTicketprice(),retrieved.get(i).getTime()));
             }
             for (int j = 0; j < full.size(); j++) {
                 System.out.println(full.get(j).toString());
