@@ -10,6 +10,7 @@ import javax.swing.*;
 
 public class FinalBooking extends JFrame {
     ArrayList<String> Result = new ArrayList();
+    public static String[] dataIn;
     Booking look_op;
     int passengers;
     public FinalBooking(Booking look_op,int passengers) throws RemoteException {
@@ -18,6 +19,7 @@ public class FinalBooking extends JFrame {
 
         
         Result=look_op.FlightPreview();
+        
         System.out.println("POUTSAAAAA "+Result.size());
         
         
@@ -72,7 +74,7 @@ public class FinalBooking extends JFrame {
         FlightArea.setEditable(false);
         FlightArea.setColumns(20);
         FlightArea.setRows(5);
-        FlightArea.append("FLIGHT ID\tDEPARTURE\tDESTINATION\tDEPART DATE\tARRIVAL DATE\tPRICE\n");
+        FlightArea.append("FLIGHT ID\tDEPARTURE\tDESTINATION\tDEPART DATE\tARRIVAL DATE\tPRICE\tTIME\n");
         for(int i=0; i<Result.size(); i++)
         {
             System.out.println(Result.get(i));
@@ -185,8 +187,13 @@ public class FinalBooking extends JFrame {
     }
 
     private void ContinueActionPerformed(ActionEvent evt) {                                         
-        
-        try {
+        if(FCode.getText().equals("") || Name.getText().equals("") || Phone.getText().equals("") || SName.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(this, "Please fill all the blank fields!");
+        }
+        else
+        {
+            try {
             look_op.BookFlight(FCode.getText(),passengers);
             String reserve = look_op.Confirm();
             System.out.println(reserve);
@@ -198,6 +205,8 @@ public class FinalBooking extends JFrame {
         }
         
         close();
+        }
+        
     }                                        
 
     private void BackActionPerformed(ActionEvent evt) {                                     

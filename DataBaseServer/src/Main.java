@@ -11,12 +11,15 @@ public class Main {
 
     public static String[] dataIn;
     public static String[] data;
+    public static String[] dataF;
     public static ArrayList<Data_toBook> Odj = new ArrayList();
     public static int remainSeats;
+    public static int okok=0;
 
     public static void main(String[] args) {
 
         int not=0;
+        
         try {
             //orizoume tin porta epikoinonias
             ServerSocket server = new ServerSocket(5555);
@@ -65,23 +68,44 @@ public class Main {
 
                                         System.out.println(message2.getToken());
                                         if (remainSeats >= message2.getSeat()) {
+                                            
                                             Data_toBook ok = new Data_toBook("OK",message2.getToken());
                                             outstream.writeObject(ok);
                                             outstream.flush();
                                             
-                                            Data_toBook start = new Data_toBook("START",flight.List.size());
-                                            outstream.writeObject(start);
-                                            outstream.flush();
+                                            
                                             System.out.println(flight.List.size());
                                             for(int k=0; k<flight.List.size(); k++)
                                             {
                                                 data= flight.List.get(k).split(":");
-                                                //System.out.println(flight.List.get(k).toString());
-                                                Odj.add(new Data_toBook(data[0],data[2],data[1],Integer.parseInt(data[5]),data[6]));
+                                                
+                                                if( (data[0].equals(dataIn[0]) && data[1].equals(dataIn[1])) || (data[0].equals(dataIn[1]) && data[1].equals(dataIn[0])))
+                                                    okok++;
+                                            }
+                                            System.out.println(okok);
+                                            Data_toBook start = new Data_toBook("START",okok);
+                                            outstream.writeObject(start);
+                                            outstream.flush();
+                                            okok=0;
+                                            Odj.clear();
+                                            System.out.println(flight.List.size());
+                                            int in=0;
+                                             for(int k=0; k<flight.List.size(); k++)
+                                            {
+                                                
+                                                dataF= flight.List.get(k).split(":");
+                                                System.out.println(k);
+                                                if((dataF[0].equals(dataIn[0]) && dataF[1].equals(dataIn[1])) || (dataF[0].equals(dataIn[1]) && dataF[1].equals(dataIn[0])))
+                                                {
+                                                    
+                                                    System.out.println(dataF[0]+""+dataF[2]+""+dataF[1]+""+dataF[5]+""+dataF[6]);
+                                                    Odj.add(new Data_toBook(dataF[0],dataF[2],dataF[1],Integer.parseInt(dataF[5]),dataF[6],dataF[4]));
                                                
-                                                System.out.println(Odj.get(k).toString());
-                                                outstream.writeObject(Odj.get(k));
-                                                outstream.flush();
+                                                    System.out.println(Odj.get(in).toString());
+                                                    outstream.writeObject(Odj.get(in));
+                                                    outstream.flush();
+                                                    in++;
+                                                }
                                             }
                                             
                                             //remainSeats = remainSeats - message2.getSeat();
@@ -105,11 +129,12 @@ public class Main {
                                     }
 
                                 }
-                                if(not==4)
+                                if(not==flight.List.size())
                                 {
                                     Data_toBook Noflight = new Data_toBook("NOflight",message2.getToken());
                                     outstream.writeObject(Noflight);
                                     outstream.flush();
+                                    not=0;
                                 }
                                 i++;
 

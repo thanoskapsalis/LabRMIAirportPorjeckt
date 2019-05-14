@@ -27,12 +27,13 @@ public class Data_toBook implements Serializable {
         this.token=token;
     }
     
-    public Data_toBook(String departure, String date, String destianation,int price,String flightID) {
+    public Data_toBook(String departure, String date, String destianation,int price,String flightID, String time) {
         this.date = date;
         this.departure = departure;
         this.destination = destianation;
         this.price=price;
         this.flightID=flightID;
+        this.time=time;
     }
 
     public Data_toBook(String flag) {
@@ -55,7 +56,7 @@ public class Data_toBook implements Serializable {
     }
 
     public String toString() {
-        return departure + " " + date + " " + destination + " " + price + " " + flightID;
+        return departure + " " + date + " " + destination + " " + price + " " + flightID + " " + time;
     }
 
     public String getFlag() {
@@ -91,4 +92,6 @@ public class Data_toBook implements Serializable {
     public int getTicketprice(){return price;}
     
     public int getPassengers(){return passengers;}
+    
+    public String getTime(){return time;}
 }

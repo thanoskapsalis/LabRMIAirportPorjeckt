@@ -42,46 +42,17 @@ public class Main extends JFrame {
         jPanel2.add(jLabel2);
         jLabel2.setBounds(0, 0, 600, 230);
 
-        From.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                FromActionPerformed(evt);
-            }
-        });
-
         jLabel3.setText("Από");
 
         jLabel4.setText("Πρός");
 
-        To.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                ToActionPerformed(evt);
-            }
-        });
-
         jLabel5.setText("Αναχώρηση");
 
-        FlightDate.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                FlightDateActionPerformed(evt);
-            }
-        });
-
         jLabel6.setText("Επιστροφή");
-
-        ReturnDate.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                ReturnDateActionPerformed(evt);
-            }
-        });
 
         jLabel7.setText("Ταξιδιώτες");
 
         Travellers.setToolTipText("");
-        Travellers.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                TravellersActionPerformed(evt);
-            }
-        });
 
         Submit.setIcon(new ImageIcon(getClass().getResource("/pic4.png"))); // NOI18N
         Submit.addActionListener(new ActionListener() {
@@ -94,121 +65,100 @@ public class Main extends JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addComponent(jPanel2, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel1, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(0, 35, Short.MAX_VALUE)
-                                        .addComponent(Submit, GroupLayout.PREFERRED_SIZE, 533, GroupLayout.PREFERRED_SIZE)
-                                        .addGap(31, 31, 31)))
-                        .addContainerGap())
-                .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                .addComponent(From)
-                                .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                .addComponent(To)
-                                .addComponent(jLabel4, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                .addComponent(FlightDate)
-                                .addComponent(jLabel5, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                .addComponent(ReturnDate)
-                                .addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                .addComponent(Travellers)
-                                .addComponent(jLabel7, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(jPanel2, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel1, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGap(0, 35, Short.MAX_VALUE)
+                                                .addComponent(Submit, GroupLayout.PREFERRED_SIZE, 533, GroupLayout.PREFERRED_SIZE)
+                                                .addGap(31, 31, 31)))
+                                .addContainerGap())
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(53, 53, 53)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(From)
+                                        .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(To)
+                                        .addComponent(jLabel4, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(FlightDate)
+                                        .addComponent(jLabel5, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(ReturnDate)
+                                        .addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(Travellers)
+                                        .addComponent(jLabel7, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 233, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel7))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(From, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(To, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(FlightDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(ReturnDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Travellers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(Submit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(12, 12, 12))
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 233, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel5)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel7))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(From, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(To, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(FlightDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(ReturnDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Travellers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(Submit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(12, 12, 12))
         );
 
         pack();
     }
-    
+
     public void close() {
         WindowEvent winClosingEvent = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
-        //outstream.write();
-    }
-
-    private void FromActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void ToActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void FlightDateActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void ReturnDateActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void TravellersActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
     }
 
     private void SubmitActionPerformed(ActionEvent evt) {
 
         try {
-            Booking look_op = (Booking) Naming.lookup("//192.168.1.7/RMIServer");
+            if (FlightDate.getText().equals("") || From.getText().equals("") || ReturnDate.getText().equals("") || To.getText().equals("") || Travellers.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Please fill all the blank fields!");
+            } else {
+                
+                Booking look_op = (Booking) Naming.lookup("//192.168.1.7/RMIServer");
 
-            Random rand = new Random();
-            look_op.BookChecker(From.getText(), To.getText(), FlightDate.getText(), ReturnDate.getText(), Integer.parseInt(Travellers.getText()),rand.nextInt(10000));
+                Random rand = new Random();
+                look_op.BookChecker(From.getText(), To.getText(), FlightDate.getText(), ReturnDate.getText(), Integer.parseInt(Travellers.getText()), rand.nextInt(10000));
 
-            String flag = look_op.Confirm();
-            System.out.println(flag);
-            if(flag.equals("OK"))
-            {
-                new FinalBooking(look_op,Integer.parseInt(Travellers.getText())).setVisible(true);
-                JOptionPane.showMessageDialog(this, flag);
-                close();
+                String flag = look_op.Confirm();
+                System.out.println(flag);
+                if (flag.equals("OK")) {
+                    new FinalBooking(look_op, Integer.parseInt(Travellers.getText())).setVisible(true);
+                    JOptionPane.showMessageDialog(this, flag);
+                    close();
 
+                }
+                if (flag.equals("NOseat")) {
+                    JOptionPane.showMessageDialog(this, "There is no seat available for this flight.\nPlease search for enotherone!");
+                }
+                if (flag.equals("NOflight")) {
+                    JOptionPane.showMessageDialog(this, "There is not an available flight.\nPlease search for enotherone!");
+                }
             }
-            if(flag.equals("NOseat"))
-            {
-                JOptionPane.showMessageDialog(this, "There is no seat available for this flight.\nPlease search for enotherone!");
-            }
-            if(flag.equals("NOflight"))
-            {
-                JOptionPane.showMessageDialog(this, "There is not an available flight.\nPlease search for enotherone!");
-            }
-            
-            //System.out.println(look_op.update());
         } catch (NotBoundException ex) {
             ex.printStackTrace();
         } catch (MalformedURLException ex) {
