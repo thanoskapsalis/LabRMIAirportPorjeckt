@@ -14,6 +14,7 @@ public class Main extends JFrame {
         Graphics();
     }
 
+    //klasi gia ta grafika 
     private void Graphics() {
 
         jLabel1 = new JLabel();
@@ -127,21 +128,24 @@ public class Main extends JFrame {
         pack();
     }
 
+    //klasi gia to klisimo tis trexon selidas kata tin metafora stin epomeni
     public void close() {
         WindowEvent winClosingEvent = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
     }
 
+    //ulopoihsi leitourgeion tin stigmi pou tha patithei to koumpi Submit
     private void SubmitActionPerformed(ActionEvent evt) {
 
         try {
             if (FlightDate.getText().equals("") || From.getText().equals("") || ReturnDate.getText().equals("") || To.getText().equals("") || Travellers.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Please fill all the blank fields!");
+                JOptionPane.showMessageDialog(this, "Please fill all the blank fields!");//emfanisi popup minimatos
             } else {
-                
-                Booking look_op = (Booking) Naming.lookup("//192.168.1.7/RMIServer");
+                //enarksi epikoinonias me ton RMI server
+                Booking look_op = (Booking) Naming.lookup("//localhost/RMIServer");
 
                 Random rand = new Random();
+                //kaloume tin sinartisi BookChecker apo ton RMI server opou exei ulopoihthei
                 look_op.BookChecker(From.getText(), To.getText(), FlightDate.getText(), ReturnDate.getText(), Integer.parseInt(Travellers.getText()), rand.nextInt(10000));
 
                 String flag = look_op.Confirm();

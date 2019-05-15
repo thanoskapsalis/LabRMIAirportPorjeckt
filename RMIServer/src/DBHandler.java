@@ -28,7 +28,7 @@ public class DBHandler {
     private void create_reservation(String flightID,int passengers) {
         try {
             System.out.println("Booking Attempt");
-            Socket socket = new Socket("192.168.1.4", 5555);
+            Socket socket = new Socket("localhost", 5555);
             ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream is = new ObjectInputStream(socket.getInputStream());
             os.writeObject(new Data_toBook("OK"));
@@ -46,7 +46,7 @@ public class DBHandler {
     public void run() {
         try {
             System.out.println("Connecting to Database");
-            Socket socket = new Socket("192.168.1.4", 5555);
+            Socket socket = new Socket("localhost", 5555);
             ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream is = new ObjectInputStream(socket.getInputStream());
             os.writeObject(new Data_toBook("OK"));

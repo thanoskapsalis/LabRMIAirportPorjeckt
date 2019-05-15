@@ -14,12 +14,12 @@ public class Main {
     public static String[] dataF;
     public static ArrayList<Data_toBook> Odj = new ArrayList();
     public static int remainSeats;
-    public static int okok=0;
+    public static int okok = 0;
 
     public static void main(String[] args) {
 
-        int not=0;
-        
+        int not = 0;
+
         try {
             //orizoume tin porta epikoinonias
             ServerSocket server = new ServerSocket(5555);
@@ -42,99 +42,76 @@ public class Main {
                     System.out.println("The client says : " + flag.getFlag());
                     boolean flightFlag = false;
 
-                    if (flag.getFlag().equals("OK")) {
+                    if (flag.getFlag().equals("OK")) {//elenxos tou eiserxomenou flag gia tin sunexisi tis diadikasias alios emfanisei minimatos lathous
 
                         while (true) {
                             Data_toBook message = (Data_toBook) instream.readObject();
                             System.out.println("The client says : " + message.getFlag());
 
-                            if (message.getFlag().equals("GO")) {
+                            if (message.getFlag().equals("GO")) {//elenxos tou eiserxomenou flag gia tin sunexisi tis diadikasias alios emfanisei minimatos lathous
                                 System.out.println("GO");
                                 Data_toBook message2 = (Data_toBook) instream.readObject();
                                 System.out.println("The booking is : " + message2.toString());
-                                Data_toBook sentWait = new Data_toBook("WAITING");
+                                Data_toBook sentWait = new Data_toBook("WAITING");//apostoli flag gia enoimerosi tou server
                                 outstream.writeObject(sentWait);
                                 outstream.flush();
-                                System.out.println("EEEEEEEEEEEEEEEEEEE  "+flight.List.size());
                                 for (int j = 0; j < flight.List.size(); j++) {
 
                                     dataIn = flight.List.get(j).split(":");
-                                    
 
                                     if (dataIn[0].equals(message2.getDeparture()) && dataIn[1].equals(message2.getDestination()) && dataIn[2].equals(message2.getDate())) {
-                                        System.out.println(message2.getDeparture());
                                         remainSeats = Integer.parseInt(dataIn[3]);
-                                        //System.out.println("PRIN " + dataIn[3]);
-
-                                        System.out.println(message2.getToken());
                                         if (remainSeats >= message2.getSeat()) {
-                                            
-                                            Data_toBook ok = new Data_toBook("OK",message2.getToken());
+
+                                            Data_toBook ok = new Data_toBook("OK", message2.getToken());
                                             outstream.writeObject(ok);
                                             outstream.flush();
-                                            
-                                            
-                                            System.out.println(flight.List.size());
-                                            for(int k=0; k<flight.List.size(); k++)
-                                            {
-                                                data= flight.List.get(k).split(":");
-                                                
-                                                if( (data[0].equals(dataIn[0]) && data[1].equals(dataIn[1])) || (data[0].equals(dataIn[1]) && data[1].equals(dataIn[0])))
+                                            for (int k = 0; k < flight.List.size(); k++) {
+                                                data = flight.List.get(k).split(":");
+
+                                                if ((data[0].equals(dataIn[0]) && data[1].equals(dataIn[1])) || (data[0].equals(dataIn[1]) && data[1].equals(dataIn[0]))) {
                                                     okok++;
+                                                }
                                             }
-                                            System.out.println(okok);
-                                            Data_toBook start = new Data_toBook("START",okok);
+                                            Data_toBook start = new Data_toBook("START", okok);//apostoli flag gia enoimerosi tou server
                                             outstream.writeObject(start);
                                             outstream.flush();
-                                            okok=0;
+                                            okok = 0;
                                             Odj.clear();
-                                            System.out.println(flight.List.size());
-                                            int in=0;
-                                             for(int k=0; k<flight.List.size(); k++)
-                                            {
-                                                
-                                                dataF= flight.List.get(k).split(":");
-                                                System.out.println(k);
-                                                if((dataF[0].equals(dataIn[0]) && dataF[1].equals(dataIn[1])) || (dataF[0].equals(dataIn[1]) && dataF[1].equals(dataIn[0])))
-                                                {
-                                                    
-                                                    System.out.println(dataF[0]+""+dataF[2]+""+dataF[1]+""+dataF[5]+""+dataF[6]);
-                                                    Odj.add(new Data_toBook(dataF[0],dataF[2],dataF[1],Integer.parseInt(dataF[5]),dataF[6],dataF[4]));
-                                               
-                                                    System.out.println(Odj.get(in).toString());
+                                            int in = 0;
+                                            for (int k = 0; k < flight.List.size(); k++) {
+
+                                                dataF = flight.List.get(k).split(":");
+                                                if ((dataF[0].equals(dataIn[0]) && dataF[1].equals(dataIn[1])) || (dataF[0].equals(dataIn[1]) && dataF[1].equals(dataIn[0]))) {
+
+                                                    System.out.println(dataF[0] + "" + dataF[2] + "" + dataF[1] + "" + dataF[5] + "" + dataF[6]);
+                                                    Odj.add(new Data_toBook(dataF[0], dataF[2], dataF[1], Integer.parseInt(dataF[5]), dataF[6], dataF[4]));
                                                     outstream.writeObject(Odj.get(in));
                                                     outstream.flush();
                                                     in++;
                                                 }
                                             }
-                                            
-                                            //remainSeats = remainSeats - message2.getSeat();
-                                            //dataIn[3] = String.valueOf(remainSeats);
-                                            //flight.List.set(j,dataIn[0]+":"+dataIn[1]+":"+dataIn[2]+":"+dataIn[3]);
-                                            //System.out.println("META " + dataIn[3]);
                                             flightFlag = true;
                                             Kk = j + 1;
                                             break;
                                         } else {
                                             System.out.println("Not enough seats");
-                                            Data_toBook Notok = new Data_toBook("NOseat",message2.getToken());
+                                            Data_toBook Notok = new Data_toBook("NOseat", message2.getToken());
                                             outstream.writeObject(Notok);
                                             outstream.flush();
                                         }
                                     } else {
                                         System.out.println("No flight found!!");
                                         not++;
-                                        System.out.println(not);
-                                        
+
                                     }
 
                                 }
-                                if(not==flight.List.size())
-                                {
-                                    Data_toBook Noflight = new Data_toBook("NOflight",message2.getToken());
+                                if (not == flight.List.size()) {
+                                    Data_toBook Noflight = new Data_toBook("NOflight", message2.getToken());
                                     outstream.writeObject(Noflight);
                                     outstream.flush();
-                                    not=0;
+                                    not = 0;
                                 }
                                 i++;
 
@@ -142,49 +119,28 @@ public class Main {
                                 System.out.println("RET");
                                 Data_toBook message3 = (Data_toBook) instream.readObject();
                                 System.out.println("The booking is : " + message3.toString());
-                                System.out.println(flightFlag);
                                 if (flightFlag == true) {
-                                    dataIn = flight.List.get(Kk).split(":");
-                                    //int remainSeats = Integer.parseInt(dataIn[3]);
-                                    //System.out.println("PRIN " + dataIn[3]);
-                                    //remainSeats = remainSeats - message3.getSeat();
-                                    //dataIn[3] = String.valueOf(remainSeats);
-                                    //flight.List.set(Kk,dataIn[0]+":"+dataIn[1]+":"+dataIn[2]+":"+dataIn[3]);
-                                    //System.out.println("META " + dataIn[3]);    
+                                    dataIn = flight.List.get(Kk).split(":"); 
                                 }
                                 i++;
 
                             }
-                           // Data_toBook bookflag = (Data_toBook) instream.readObject();
-                            //System.out.println("EGW TO LEW RE : " + bookflag.getFlag());
-                            if(message.getFlag().equals("BOOK"))
-                            {
-                                System.out.println(message.getFlightID());
-                                
-                                 String[] dataIn = flight.List.get(Kk-1).split(":");
-                                 
-                                System.out.println(dataIn[6]);
-                                if(message.getFlightID().equals(dataIn[6]))
-                                {
-                                    System.out.println("PRIN " + dataIn[3]);
-                                    remainSeats = remainSeats - message.getPassengers();
-                                    dataIn[3] = String.valueOf(remainSeats);
-                                    flight.List.set(Kk-1,dataIn[0]+":"+dataIn[1]+":"+dataIn[2]+":"+dataIn[3]+":"+dataIn[4]+":"+dataIn[5]+":"+dataIn[6]);
-                                    flight.List.set(Kk,dataIn[1]+":"+dataIn[0]+":"+dataIn[2]+":"+dataIn[3]+":"+dataIn[4]+":"+dataIn[5]+":"+0);
-                                    System.out.println("META " + dataIn[3]);
-                                    System.out.println(flight.List.get(Kk-1));
-                                    System.out.println(flight.List.get(Kk));
-                                    Data_toBook Booked = new Data_toBook("FINE");
-                                    outstream.writeObject(Booked);
-                                    outstream.flush();
-                                    
-                                }
-                                
-                            }
-                            
+                            if (message.getFlag().equals("BOOK")) {
+                                for (int g = 0; g < flight.List.size(); g++) {
+                                    String[] dataIn = flight.List.get(g).split(":");
 
-                            for (int j = 0; j < flight.List.size(); j++) {
-                                System.out.println(flight.List.get(j));
+                                    if (message.getFlightID().equals(dataIn[6])) {
+                                        remainSeats = remainSeats - message.getPassengers();
+                                        dataIn[3] = String.valueOf(remainSeats);
+                                        flight.List.set(g, dataIn[0] + ":" + dataIn[1] + ":" + dataIn[2] + ":" + dataIn[3] + ":" + dataIn[4] + ":" + dataIn[5] + ":" + dataIn[6]);
+                                        flight.List.set(g+1, dataIn[1] + ":" + dataIn[0] + ":" + dataIn[2] + ":" + dataIn[3] + ":" + dataIn[4] + ":" + dataIn[5] + ":" + 0);
+                                        Data_toBook Booked = new Data_toBook("FINE");
+                                        outstream.writeObject(Booked);
+                                        outstream.flush();
+
+                                    }
+                                }
+                                sock.close();
                             }
 
                             if (i == 2) {
@@ -193,12 +149,6 @@ public class Main {
                         }
 
                     }
-                    //if(flag.getFlag().equals("BOOK"))
-                    //{
-                        
-                       // System.out.println("OKOKOK");
-                    //}
-
                 } catch (Exception ex) {
                     System.out.println(ex);
                 }

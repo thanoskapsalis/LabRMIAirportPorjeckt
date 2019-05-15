@@ -3,8 +3,6 @@ import java.awt.Toolkit;
 import java.awt.event.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 
@@ -13,21 +11,15 @@ public class FinalBooking extends JFrame {
     public static String[] dataIn;
     Booking look_op;
     int passengers;
+    //constractor gia tin enarksi tis epikoinonias meso RMI apo tin Main 
     public FinalBooking(Booking look_op,int passengers) throws RemoteException {
         this.look_op=look_op;
         this.passengers=passengers;
-
-        
         Result=look_op.FlightPreview();
-        
-        System.out.println("POUTSAAAAA "+Result.size());
-        
-        
-        
         Graphics();
     }
 
-                        
+    //klasi gia ta grafika            
     private void Graphics() {
 
         jTextField1 = new JTextField();
@@ -181,22 +173,23 @@ public class FinalBooking extends JFrame {
         pack();
     }    
     
+    //klasi gia to klisimo tis trexon selidas kata tin metafora stin epomeni
     public void close() {
         WindowEvent winClosingEvent = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
     }
 
+    //ulopoihsi leitourgeion tin stigmi pou tha patithei to koumpi Continue
     private void ContinueActionPerformed(ActionEvent evt) {                                         
-        if(FCode.getText().equals("") || Name.getText().equals("") || Phone.getText().equals("") || SName.getText().equals(""))
+        if(FCode.getText().equals("") || Name.getText().equals("") || Phone.getText().equals("") || SName.getText().equals(""))//elenxos gia tin orthi simplirosi olon ton pedion
         {
-            JOptionPane.showMessageDialog(this, "Please fill all the blank fields!");
+            JOptionPane.showMessageDialog(this, "Please fill all the blank fields!");//emfanisi popup minimatos
         }
         else
         {
             try {
-            look_op.BookFlight(FCode.getText(),passengers);
-            String reserve = look_op.Confirm();
-            System.out.println(reserve);
+            look_op.BookFlight(FCode.getText(),passengers);//kaloume tin sinartisi BookFlight apo ton RMI server opou exei ulopoihthei
+            String reserve = look_op.Confirm();//kaloume tin sinartisi Confirm apo ton RMI server opou exei ulopoihthei
             if(reserve.equals("FINE"))
             {
                 JOptionPane.showMessageDialog(this, "Your reservation has been completed!");
@@ -209,6 +202,7 @@ public class FinalBooking extends JFrame {
         
     }                                        
 
+    //metafora sthn arxiki othoni kai klisimo tis trexousas tin stigmi pou tha patithei to koumpi Back
     private void BackActionPerformed(ActionEvent evt) {                                     
         new Main().setVisible(true);
         close();
