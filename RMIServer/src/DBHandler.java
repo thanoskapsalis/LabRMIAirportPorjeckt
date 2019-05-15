@@ -7,6 +7,8 @@ import java.net.Socket;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 
+
+//Στον DataBase handler επιτελούνται όλες οι λειτουργίες που αφορούν την επικοινωνία του μεσολαβητή με την κεντρική βάση δεδομένων 
 public class DBHandler {
     Data_toBook togo;
     Data_toBook toreturn;
@@ -25,6 +27,7 @@ public class DBHandler {
         create_reservation(flightID,passengers);
     }
 
+    //Δημιουργεί ενα νεο connection με τον server όπου και του μεταφέρει τα στοιχεία της πτήσης που διάλεξε ο χρήσητης
     private void create_reservation(String flightID,int passengers) {
         try {
             System.out.println("Booking Attempt");
@@ -43,6 +46,8 @@ public class DBHandler {
 
     }
 
+    //Ανοίγει το connection με το database ώστε να ελένξουμε άμα μια πτήση είναι διαθέσιμη 
+    //Το response του server εμφανίζεται και επεξεργάζεται στην συνάρτηση Response()
     public void run() {
         try {
             System.out.println("Connecting to Database");
@@ -73,6 +78,8 @@ public class DBHandler {
 
     }
 
+    //Αναλόγως με το flag poy μας απέστειλε ο server αποστέλουμε το κατάλληλο μύνημα στον client
+    //Άμα υπάρχει πτήση ο server επιστρέφει της πτήσης αναχώρησης και επιστροφής μέσω της RetrieveFlights() και στην συνέχεια ομαδοποιούναι σε πτήση σαν πακέτο με την GroupFlights()
     public void Response(ObjectOutputStream os, ObjectInputStream is) throws IOException, ClassNotFoundException {
         System.out.println("Waiting for response from the DB Server");
         Data_toBook response = (Data_toBook) is.readObject();
@@ -101,6 +108,7 @@ public class DBHandler {
     public String rmi() {return RMIflag;}
 
 
+    //Επιστροφή πτήσεων αναχώρησης επιστροφής απο τον server
     private void RetrieveFlights(ObjectOutputStream os, ObjectInputStream is) throws IOException, ClassNotFoundException {
         Data_toBook data = (Data_toBook) is.readObject();
         System.out.println("Retrieving Flights Number: " + data.getToken());
@@ -113,6 +121,7 @@ public class DBHandler {
 
     }
 
+    //Ομαδοποίηση σε πτήσεις πακέτα 
     private void GroupFlights(ArrayList<Data_toBook> retrieved) {
         System.out.println("GROUPING");
         for (int i = 0; i < retrieved.size(); i++) {

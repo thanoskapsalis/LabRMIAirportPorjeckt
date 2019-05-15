@@ -16,6 +16,7 @@ public class Server_Connector {
     public static ArrayList<DataStorage> client = new ArrayList();
     public static void main(String[] args) {
         RMIHandler handler;
+        //Εκίνηση RMI
         try {
             handler = new RMIHandler();
             System.out.println("ServerBooted");
