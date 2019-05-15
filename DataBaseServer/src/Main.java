@@ -52,12 +52,12 @@ public class Main {
                                 System.out.println("GO");
                                 Data_toBook message2 = (Data_toBook) instream.readObject();
                                 System.out.println("The booking is : " + message2.toString());
-                                Data_toBook sentWait = new Data_toBook("WAITING");//apostoli flag gia enoimerosi tou server
+                                Data_toBook sentWait = new Data_toBook("WAITING");//apostoli flag gia enoimerosi tou RMI server(client)
                                 outstream.writeObject(sentWait);
                                 outstream.flush();
-                                for (int j = 0; j < flight.List.size(); j++) {
+                                for (int j = 0; j < flight.List.size(); j++) {//prospelasi olis tis listas ton ptiseon gia tous aparetitous elenxous
 
-                                    dataIn = flight.List.get(j).split(":");
+                                    dataIn = flight.List.get(j).split(":");//split tis listas me vasei to ":" gia tous aparetitous elenxous
 
                                     if (dataIn[0].equals(message2.getDeparture()) && dataIn[1].equals(message2.getDestination()) && dataIn[2].equals(message2.getDate())) {
                                         remainSeats = Integer.parseInt(dataIn[3]);
@@ -91,10 +91,10 @@ public class Main {
                                                     in++;
                                                 }
                                             }
-                                            flightFlag = true;
+                                            flightFlag = true;//enoimerosi tou flag flightFlag
                                             Kk = j + 1;
                                             break;
-                                        } else {
+                                        } else {//an den isuei o parapanw elenxos aposteloume katalilo flag ston RMI server
                                             System.out.println("Not enough seats");
                                             Data_toBook Notok = new Data_toBook("NOseat", message2.getToken());
                                             outstream.writeObject(Notok);
@@ -107,7 +107,7 @@ public class Main {
                                     }
 
                                 }
-                                if (not == flight.List.size()) {
+                                if (not == flight.List.size()) {//elenxos gia to an den uparxei i ptisi pou anazitithike kai apostoli katalilou flag
                                     Data_toBook Noflight = new Data_toBook("NOflight", message2.getToken());
                                     outstream.writeObject(Noflight);
                                     outstream.flush();
@@ -115,7 +115,7 @@ public class Main {
                                 }
                                 i++;
 
-                            } else if (message.getFlag().equals("RET")) {
+                            } else if (message.getFlag().equals("RET")) {//an uparxei h ptisei tote proxorame ston elenxo tis epistrofis tis ptisis (apo tin stigmi pou einai paketo)
                                 System.out.println("RET");
                                 Data_toBook message3 = (Data_toBook) instream.readObject();
                                 System.out.println("The booking is : " + message3.toString());
@@ -125,25 +125,26 @@ public class Main {
                                 i++;
 
                             }
-                            if (message.getFlag().equals("BOOK")) {
+                            if (message.getFlag().equals("BOOK")) {//an to flag pou exoume lavei einai BOOK proxorame gia tin ulopoihsi tis kratisis
                                 for (int g = 0; g < flight.List.size(); g++) {
                                     String[] dataIn = flight.List.get(g).split(":");
 
-                                    if (message.getFlightID().equals(dataIn[6])) {
+                                    if (message.getFlightID().equals(dataIn[6])) {//an to flightID tis ptisis pou anazitithike vrethei tote proxorame stin kratisi
                                         remainSeats = remainSeats - message.getPassengers();
                                         dataIn[3] = String.valueOf(remainSeats);
+                                        //enoimerosi tis listas
                                         flight.List.set(g, dataIn[0] + ":" + dataIn[1] + ":" + dataIn[2] + ":" + dataIn[3] + ":" + dataIn[4] + ":" + dataIn[5] + ":" + dataIn[6]);
                                         flight.List.set(g+1, dataIn[1] + ":" + dataIn[0] + ":" + dataIn[2] + ":" + dataIn[3] + ":" + dataIn[4] + ":" + dataIn[5] + ":" + 0);
-                                        Data_toBook Booked = new Data_toBook("FINE");
+                                        Data_toBook Booked = new Data_toBook("FINE");//apostoli flag gia tin enoimerosi tis epitixis karatisis
                                         outstream.writeObject(Booked);
                                         outstream.flush();
 
                                     }
                                 }
-                                sock.close();
+                                sock.close();//klisimo tou socket epikoinonias meta to peras tis xrisis
                             }
 
-                            if (i == 2) {
+                            if (i == 2) {//an o metritis i isoute me duo(diladi uparxei to paketo tis ptisis pou anazitithike tote telrionei h epanalipsi kathos kai h epikoinonia)
                                 break;
                             }
                         }
